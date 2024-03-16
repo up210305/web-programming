@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Count | Clicks!!!</title>
-    <script defer src="app.js"></script>
-</head>
-<body>
-    <h1>Hola Mundo</h1>
-    <button id="btn"> Click!!!</button>
-</body>
+    <link rel="stylesheet" href="styles.css">
+
+  </head>
+  <body>
+    <main class="container">
+      <section class="card">
+        <article class="card-info">
+          <p>You have <span id="container-clicks">0</span> click's</p>
+        </article>
+        <article class="card-buttons">
+          <button class="btn btn-primary">Increment</button>
+          <button class="btn btn-secondary">Decrement</button>
+          <button class="btn btn-reset">Reset</button>
+        </article>
+      </section>
+
+      <script src="app.js"></script>
+    </main>
+  </body>
 </html>

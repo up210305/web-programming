@@ -1,20 +1,21 @@
-// number
-let x = 1;
-let y = 10;
+// Primera manera de recuparar un elemento HTML
+const containerClicks = document.getElementById('container-clicks');
+const btnIncrement = document.querySelector('.btn-primary');
+const btnDecrement = document.querySelector('.btn-secondary');
+const btnReset = document.querySelector('.btn-reset');
+let conter = 0;
 
-let c = x - y;
-//alert(c);
+btnIncrement.onclick = function() {
+  conter++;
+  containerClicks.innerText = conter;
+}
 
-// string
-let name = "asasa";
-let name1 = 'sadsa';
-let name2 = `dsasdsad`;
+btnDecrement.onclick = () => {
+  conter--;
+  containerClicks.innerText = conter;
+};
 
-// boolean
-let a = true && true || false;
-let b = !false;
-let min_number = 1;
-
-let button = document.getElementById("btn");
-
-console.log(button);
+btnReset.onclick = () => {
+  conter = 0
+  containerClicks.innerText = conter;
+};
