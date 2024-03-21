@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+
+  <!-- Estilos Css -->
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="userselects">
+      <select id="select-users"></select>
+    </section>
+    <section class="user-container" id="user-container">
+      <!-- Elemento de lista para mostrar la información del usuario seleccionado -->
+      <h3>Información del usuario seleccionado</h3>
+      <ul id="user-info"></ul> <!-- Aquí se mostrará la información del usuario -->
+    </section>
+    <section class="task-container" id="task-container">
+      <!-- Elemento de lista para mostrar las tareas -->
+      <h3>Lista de tareas del usuario</h3>
+      <ul id="task-list"></ul> <!-- Aquí se mostrarán las tareas del usuario -->
+    </section>
+  </main>
+
+  <script src="assets/js/app.js"></script> <!-- Asegúrate de que la ruta del archivo JavaScript sea correcta -->
+</body>
+</html>
