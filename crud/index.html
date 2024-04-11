@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Usuarios y Tareas</title>
+    <!-- Agrega los estilos CSS si es necesario -->
+    <link rel="stylesheet" href="/crud/assets/css/styles.css">
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">CRUD - ToDo App</a>
+        </div>
+      </nav>
+    </header>
+    <main class="container-fluid mt-5">
+      <section class="row">
+        <article class="col-4">
+          <div class="card">
+            <header class="card-header">
+              <p id="form-title" class="h2 text-center text-capitalize">
+                Insert Task
+              </p>
+            </header>
+            <form id="form-task" class="card-body">
+              <div class="form-group">
+                <label for="title">Title:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  placeholder="Enter task title"
+                />
+              </div>
+              <div class="form-group">
+                <label for="users">User:</label>
+                <select class="form-control" id="users">
+                  <option selected disabled>Select a User</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="checkbox" class="form-check-input" id="completed" name="completed">
+              </div>
+              <br><br>
+              <button type="submit" class="btn btn-primary w-100" id="saveButton">Save</button>
+            </form>
+          </div>
+        </article>
+        <article class="col-8">
+          <!-- Tabla de Tareas -->
+          <h2>Tareas del Usuario Seleccionado</h2>
+          <table id="userTasksTable" class="table table-dark table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Título</th>
+                <th>Completado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="userTasksTableBody">
+              <!-- Las filas de la tabla de tareas se generarán dinámicamente mediante JavaScript -->
+            </tbody>
+          </table>
+        </article>
+      </section>
+    </main>
+    <!-- Agrega los scripts de Bootstrap si es necesario -->
+
+    <!-- <script src="/crud/assets/js/petitions.js"></script> -->
+    <script type="module" src="/crud/assets/js/app.js"></script>
+  </body>
+</html>
