@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     })
 
 })
+
 userSelect.addEventListener('change', (e)=>{
     const id = parseInt(e.target.value);
 
@@ -42,7 +43,6 @@ userSelect.addEventListener('change', (e)=>{
                 ul.appendChild(liNombre);
                 ul.appendChild(liEmail);
                 
-                // console.log(allUsers[i]);
                 break;
             }
         }
@@ -82,7 +82,6 @@ displayButton.addEventListener('click',()=>{
             ${template}
         </ul>
         `
-        // console.log(template);
     })
 })
 
@@ -130,7 +129,7 @@ function getTasks(userId){
 
 
 function getAllTasks() {
-    return fetch('http://localhost:5002/tasks.php')
+    return fetch('http://localhost:5000/tasks.php')
       .then(resp => {
           return resp.json()});
   }
