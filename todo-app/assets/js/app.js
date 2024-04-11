@@ -1,128 +1,137 @@
-// Elementos HTML
 const userSelect = document.getElementById('select-users');
 const userContainer = document.getElementById('user-container');
 const taskContainer = document.getElementById('task-container');
-const btnSearchTask = document.getElementById('btn');
+const displayButton = document.getElementById('btndisplay');
 
-// Codígo nesesario para mostrar información
-document.addEventListener('DOMContentLoaded', () => {
-  getAllUsers()
-    .then(allUsers => {
-      let template = "";
-      const firstUser = allUsers[0];
-      for(let i = 0; i < allUsers.length; i++) {
-        template += `
-          <option value="${allUsers[i].id}" >${allUsers[i].firstname}</option>
-        `;
-      }
-
-      userSelect.innerHTML = template;
-      userContainer.innerHTML = `
-        <h3>Informacion del usuario seleccionado</h3>
+//Codigo
+document.addEventListener('DOMContentLoaded',()=>{
+    getAllUsers().then(allUsers => {
+        let template = "";
+        const firstUser = allUsers[0];
+        for (let i = 0; i < allUsers.length; i++) {
+            const user = allUsers[i];
+            template = template + `
+            <option value="${i+1}">${allUsers[i].firstname}</option>
+            `
+        }
+        userSelect.innerHTML = template
+        userContainer.innerHTML =
+        `
+        <h3>Información del usuario seleccionado</h3>
         <ul>
-          <li>Nombre completo: ${firstUser.firstname} ${firstUser.lastname}</li>
-          <li>Email: ${firstUser.email}</li>
+          <li>Nombre completo:${firstUser.firstname} ${firstUser.lastname} </li>
+          <li>Email: 
+            ${firstUser.email}
+          </li>
         </ul>
-      `;
-    });
-});
+        `
+    })
 
-userSelect.addEventListener('change', (e) => {
-  const id = parseInt(e.target.value);
-  
-  getAllUsers()
-    .then(allUsers => {
-      const ul = document.createElement('ul');
-      for (let i = 0; i<allUsers.length;i++) {
-        if (id === allUsers[i].id) {
-          const liNombre = document.createElement('li');
-          const liCorreo = document.createElement('li');
+})
+userSelect.addEventListener('change', (e)=>{
+    const id = parseInt(e.target.value);
 
-          liNombre.innerText = `${allUsers[i].firstname} ${allUsers[i].lastname}`;
-          liCorreo.innerText = allUsers[i].email;
-
-          ul.appendChild(liNombre);
-          ul.appendChild(liCorreo);
-
-          break;
+    getAllUsers().then(allUsers=>{
+        const ul = document.createElement('ul');
+        for (let i = 0; i < allUsers.length; i++) {
+            if (id === allUsers[i].id) {
+                const liNombre = document.createElement('li');
+                const liEmail = document.createElement('li')
+                liNombre.innerText = `Nombre completo: ${allUsers[i].firstname} ${allUsers[i].lastname}`
+                liEmail.innerText = `Email: ${allUsers[i].email}`;
+                ul.appendChild(liNombre);
+                ul.appendChild(liEmail);
+                
+                // console.log(allUsers[i]);
+                break;
+            }
         }
-      }
+        const h3 = document.createElement('h3')
+        h3.innerText = `Informacion del usuario seleccionado`
+        
+        userContainer.innerHTML = ""
+        userContainer.appendChild(h3)
+        userContainer.appendChild(ul)
+    })
+})
 
-      const h3 = document.createElement('h3');
-      h3.innerText = "Informacion del usuario seleccionado";
+displayButton.addEventListener('click',()=>{
+    const id = parseInt(userSelect.value);
+    getAllTasks().then(allTasks =>{
+        let template = ""
+        console.log(allTasks.length)
+        for (let i = 0; i < allTasks.length; i++) {
+            if (id === allTasks[i].idUser){
+                let isChecked = "";
 
-      userContainer.innerHTML = "";
-      userContainer.appendChild(h3);
-      userContainer.appendChild(ul);
-    });
-});
+                if(allTasks[i].completed){
+                    isChecked="checked";
+                }
 
-btnSearchTask.addEventListener('click', () => {
-  const id = parseInt(userSelect.value);
-
-  getAllTasks()
-    .then(allTasks => {
-      let template = "";
-
-      for (let i = 0; i< allTasks.length; i++) {
-        if (id === allTasks[i].userId) {
-          let isChecked = "";
-
-          if (allTasks[i].completed) {
-            isChecked = "checked";
-          }
-
-          template += `
-            <li>
-              <span>${allTasks[i].title}</span>
-              <input type="checkbox" ${isChecked}>
-            </li>
-          `;
+                template += `
+                <li>
+                <span>${allTasks[i].title} </span>
+                <input type="checkbox" ${isChecked}>
+                `
+            }            
         }
-      }
-
-      taskContainer.innerHTML = `
+        taskContainer.innerHTML = 
+        `
         <h3>Lista de tareas del usuario</h3>
         <ul>
-          ${template}
+            ${template}
         </ul>
-      `;
-    });
-});
+        `
+        // console.log(template);
+    })
+})
 
-// Fin de codígo
 
-// Funciones
-/**
- * Optiene una lista de todos los usuarios que pueden existir
- * @returns {Promise<User[]>}
- */
+
+displayButton.addEventListener('click',()=>{
+    if (taskContainer.style.visibility === 'visible') {
+        taskContainer.style.visibility = 'hidden';
+    } else {
+        taskContainer.style.visibility = 'visible';
+    }
+})
+
 function getAllUsers() {
-  return fetch('http://localhost:5000/connection.php')
-    .then(resp => resp.json());
+    return fetch('http://localhost:5000/connection.php')
+    .then((resp) => {
+        return resp.json()
+    });
 }
 
-/**
- * Optiene una lista de todas las tareas que hay de todos los usuarios
- * @returns {Promise<Task[]>}
- */
+function getUser(value) {
+    return fetch('data/usuarios.json')
+    .then((resp) => {
+        return resp.json()
+    }).then((resp)=>{
+        return resp[value-1]
+    });
+}
+
+function getTasks(userId){
+    return fetch('data/tareas.json')
+    .then((resp)=>{
+        return resp.json()
+    }).then((resp)=>{
+        const array = []
+        for (let i = 0; i < resp.length; i++) {
+            const element = resp[i];
+            if (element.userId==userId) {
+                array.push(element);
+            }
+        }
+        return array
+    })
+}
+
+
 function getAllTasks() {
-  return fetch('/data/tareas.json')
-    .then(resp => resp.json());
-}
-
-/**
- * @typedef User Definición de un usuario
- * @property {number} id Identificador unico del usuario
- * @property {string} firstname Primer nombre del usuario
- * @property {string} lastname Apellido del usuario
- * @property {string} email Correo electronico del usuario
-  */
-
-/**
- * @typedef Task Definición de una tarea de usuario
- * @property {number} id Identificador unico de la tarea
- * @property {number} userId IDentificador del uaurio a quien corresponde la tarea
- * @property {string} title Titulo de la tarea
- * @property {boolean} completed Estado de la tarea si esta completada o no
- */
+    return fetch('http://localhost:5002/tasks.php')
+      .then(resp => {
+          return resp.json()});
+  }
+  
